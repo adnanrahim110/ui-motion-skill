@@ -1,87 +1,72 @@
-# 02. Timing, Easing Curves & Spring Physics Reference
+# Timing, easing, and springs
 
-## 1. Custom CSS Cubic-Bezier Tokens
-Never use standard CSS `ease`, `linear` (except for continuous spinners/marquees), or `ease-in` on UI entrances. Define and use these exact tokens:
+All numbers here are starting presets, not biological laws. A project's established
+system and the user's instructions take priority.
 
-```css
-:root {
-  /* Primary UI Entrances: Popovers, Dropdowns, Modals, Cards, Toasts */
-  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
-  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
-  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+## One consistent functional budget
 
-  /* On-Screen Morphing & Layout Shifts: Container resizing, Tab indicators, Bento states */
-  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
-  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+| Interaction | Entry/change | Exit/release | Guidance |
+| --- | --- | --- | --- |
+| Repeated tabs, filters, typing | 0ms | 0ms | Update state immediately. |
+| Keyboard command surface | 0–80ms | 0–60ms | Prefer immediate focus and content. |
+| Occasional tactile button | 80–100ms | 100–140ms | Inner visual only; no delayed action. |
+| Tooltip | 120–160ms | 80–100ms | First-hover delay is separate. |
+| Popover/menu | 160–200ms | 100–120ms | Use trigger-aware origin. |
+| Dialog/drawer | 200–250ms | 100–150ms | Never hold an action for the transition. |
+| Step/layout morph | 180–240ms | 100–150ms | Avoid content distortion. |
+| Error emphasis | 160–200ms total | No additional exit | Optional small shake; no shaking for reduced motion. |
+| Skeleton/content handoff | 120–180ms | 80–120ms | Content is usable immediately. |
 
-  /* iOS / Native Sheet & Drawer Physics */
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+These resolve the old contradictory 320ms drawer/shake examples. The 300ms ceiling
+is a functional UI default. It excludes idle intervals, actual network work,
+user-driven scroll/drag, and a justified, bounded marketing demonstration. None
+of those exceptions let high-frequency controls wait on animation.
 
-  /* Fast Exit Curve (Pair with 100ms-150ms duration) */
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+## Exact curves
 
-  /* Subtle Tactile Overshoot (Use sparingly for badges or magnetic snap-back) */
-  --ease-spring-subtle: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+```ts
+export const MOTION = {
+  enter: [0.16, 1, 0.3, 1],
+  change: [0.22, 1, 0.36, 1],
+  exit: [0.4, 0, 1, 1],
+  layout: [0.65, 0, 0.35, 1],
+} satisfies Record<string, [number, number, number, number]>;
 ```
 
-## 2. Strict Component Duration Budget Table
+Use the entrance curve for surfaces and the exit curve on their shorter exits.
+Use the layout curve for a bounded morph, not a delay before responding. In Tailwind,
+use complete inline classes such as `ease-[cubic-bezier(0.16,1,0.3,1)]
+motion-reduce:transition-none`. Do not invent one-use tokens. Useful shared tokens
+belong in the existing token mechanism (`@theme` in Tailwind v4).
 
-| UI Element / Interaction | Entry Duration | Exit Duration | Curve / Physics |
-| :--- | :--- | :--- | :--- |
-| **High-frequency action (50+/day)** | `0ms` | `0ms` | None (Instant) |
-| **Keyboard Command Palette (`Cmd+K`)** | `0ms-80ms` | `0ms-60ms` | `--ease-out-quart` |
-| **Button `:active` press (`scale(0.97)`)** | `100ms-140ms` | `120ms-160ms` | `--ease-out-cubic` |
-| **Icon State Morph (with `blur(2px)`)** | `150ms-180ms` | `120ms-150ms` | `--ease-out-quart` |
-| **Tooltips & Micro-Popovers** | `125ms-180ms` | `90ms-120ms` | `--ease-out-quint` |
-| **Dropdowns & Select Menus** | `150ms-200ms` | `100ms-140ms` | `--ease-out-quint` |
-| **Modals & Dialogs** | `200ms-250ms` | `120ms-150ms` | `--ease-out-expo` or Snappy Spring |
-| **Side Drawers & Bottom Sheets** | `250ms-320ms` | `160ms-200ms` | `--ease-drawer` |
-| **Container Height/Width Morphing** | `200ms-260ms` | `180ms-220ms` | Critically Damped Spring |
-| **Skeleton Loader to Content Cross-fade** | `200ms-250ms` | `150ms` | `--ease-out-cubic` |
-| **Marketing Bento / Hero Illustrations** | `400ms-700ms` | `200ms-300ms` | Custom Spring / Choreographed |
+Linear mapping is appropriate for scroll progress whose position must match input.
+It is not the default easing for a timed UI entrance. A spinner can use uniform
+rotation; prefer static status when that is clearer.
 
-## 3. Framer Motion (`motion/react`) Spring Configurations
-Springs feel more natural than duration-based curves for gestures and layout morphs because they preserve velocity when interrupted.
+## Springs and interruption
 
-```typescript
-export const SPRINGS = {
-  // Crisp, zero-bounce spring for professional dashboards, modals, and container resizing
-  snappy: {
-    type: 'spring' as const,
-    stiffness: 450,
-    damping: 36,
-    mass: 1,
-  },
+A layout starting spring is `{ type: 'spring', stiffness: 450, damping: 36, mass: 1 }`.
+It is near critically damped, not an exact solution for every library's units.
+Settling time depends on displacement, velocity, and rest thresholds; these parameters
+do not guarantee exactly 220ms. Use a timed curve for a fixed exit budget.
 
-  // Smooth layout morphing for multi-step cards, accordions, and shared layoutId indicators
-  fluidLayout: {
-    type: 'spring' as const,
-    stiffness: 350,
-    damping: 32,
-    mass: 1,
-  },
+Keep one controller per moving visual. Retarget a spring or replace/cancel the
+previous animation rather than queueing stale transitions. Clean up on unmount,
+preference changes, and interrupted flows. Animation completion must never be the
+only path to committing business state.
 
-  // Tactile micro-interaction spring with minimal ~5% overshoot (switches, magnetic buttons)
-  tactile: {
-    type: 'spring' as const,
-    stiffness: 500,
-    damping: 28,
-    mass: 0.8,
-  },
+## Tooltip groups, scale, and blur
 
-  // Soft follow spring for cursor followers or floating previews
-  cursorFollow: {
-    type: 'spring' as const,
-    stiffness: 220,
-    damping: 26,
-    mass: 0.5,
-  },
-};
-```
+A first tooltip can wait roughly 350ms to avoid accidental discovery. Adjacent
+tooltips can open immediately within a 400ms warm window. These are chosen defaults.
+Keyboard focus also exposes descriptions; retain Escape. Reuse an accessible
+primitive's group instead of adding a second timer system.
 
-## 4. Tooltip & Popover Warm-State Memory Pattern
-When hovering across a toolbar of buttons with tooltips:
-1. **Cold Hover (First Tooltip):** Wait `350ms` before showing the tooltip (`150ms` entrance animation) so casual mouse movement across the screen does not trigger accidental popups.
-2. **Warm State (Adjacent Tooltips within `400ms` of closing the previous):** Skip the delay (`0ms` delay) and either snap instantly or glide the existing tooltip container across (`layoutId="active-tooltip"`) in `140ms`.
+Scale contextual overlays modestly from the trigger edge. A centered dialog has a
+different spatial relationship. A 0.96 entrance is an example, not a universal floor.
+A progress-bar fill can validly grow from zero. Blur bridging is optional, may cost
+paint/raster work, and must not soften essential text. Start without blur or overshoot.
+
+Sources: [Emil's tips](https://emilkowal.ski/ui/7-practical-animation-tips),
+[Motion transitions](https://motion.dev/docs/react-transitions),
+[animation performance](https://web.dev/articles/animations-guide).

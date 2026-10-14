@@ -1,0 +1,26 @@
+{
+  "repository": "adnanrahim110/ui-motion-skill",
+  "description": "UI animation and motion design skill for AI coding agents. Guides Claude Code, Codex, Cursor, Antigravity and more through accessible micro-interactions, scroll animations and reduced motion. Includes an interactive CLI installer.",
+  "topics": [
+    "agent-skills",
+    "ai-coding-agents",
+    "ui-animation",
+    "motion-design",
+    "micro-interactions",
+    "accessibility",
+    "reduced-motion",
+    "scroll-driven-animations",
+    "react",
+    "tailwindcss",
+    "framer-motion",
+    "claude-code",
+    "codex",
+    "cursor",
+    "antigravity",
+    "gemini-cli",
+    "github-copilot",
+    "windsurf",
+    "cline",
+    "roo-code"
+  ]
+}

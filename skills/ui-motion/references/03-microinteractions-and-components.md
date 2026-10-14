@@ -1,53 +1,76 @@
-# 03. Micro-Interactions & Component Blueprints
+# Micro-interactions and component behavior
 
-Every pattern below is derived from Manu Arora's breakdown of **Cobra.systems (by Harsh)**, **Elvish's responsive components**, **Clerk.com**, **Family.co**, and **Transitions.dev**.
+Every optional effect still passes the five gates. Timing presets are in reference 02;
+typed examples are indexed in reference 05, with source attribution in reference 06.
 
----
+## Dialogs and progressive flows
 
-## 1. OTP / Verification Code Input (Cobra.systems Pattern)
-Never ship a static, lifeless input box for verification codes. Implement these 4 distinct micro-states:
-1. **Digit Entry:** As each digit is typed or pasted, animate it from `translateY(6px) scale(0.92) opacity(0)` to `translateY(0) scale(1) opacity(1)` over `140ms` using `--ease-out-quint`. Active slot displays a smooth layout-animated focus ring (`layoutId="otp-focus"`).
-2. **Verification Shimmer:** The moment the final digit is entered, sweep a subtle diagonal highlight shimmer across the input slots (`250ms`) while verifying.
-3. **Success State:** All slots smoothly transition their border and subtle background tint to emerald green (`#10b981`) and compress slightly together (`gap` reduces by `2px` or a subtle scale pulse `1 -> 1.02 -> 1`).
-4. **Error State (Invalid Code):** Trigger a tight horizontal keyframe shake (`[0, -8px, 8px, -6px, 6px, -3px, 3px, 0]` over `320ms`), flash borders crimson (`#ef4444`), and smoothly clear/reset focus so the user can retry immediately.
+Use one named native dialog or an accessible dialog primitive. Deliberately place
+focus, contain keyboard focus, support Escape, and return to a connected trigger
+(or a logical fallback). A heading names the dialog only when associated with it.
 
----
+Keep one shell across steps and preserve values on Back. Loading, error, and success
+belong in the same flow. Abort stale work on step changes and close. Focus the new
+heading or relevant field on a step change. Prefer a small opacity change on just
+the changing region. An optional bounds morph needs ResizeObserver cleanup and a
+static reduced-motion path; a short dialog may not need it. Support enlarged text
+with a viewport-bounded height and internal scrolling.
 
-## 2. Gradual Revelation in a Single Morphing Modal (Manu Arora's Calorie Tracker Pattern)
-When building multi-step workflows (e.g., uploading a meal photo -> analyzing -> showing macro breakdowns, or multi-question onboarding cards):
-* **Rule 1:** Never dump all inputs and output fields into one giant initial screen.
-* **Rule 2:** Never close Modal 1 and open a brand-new Modal 2.
-* **Rule 3 (In-Place Morph):** Keep a single outer modal container wrapped in an auto-resizing observer (`ResizeObserver` + Framer Motion `animate={{ height: bounds.height }}`).
-  * **Step 1:** Show only the primary action (e.g., meal photo upload dropzone).
-  * **Step 2 (Transition):** When uploaded, fade out the dropzone (`120ms`), morph the image into a compact thumbnail header inside the same modal, display a smooth inline progress indicator, and expand the container height (`220ms` spring) to reveal the protein/carb/fat macro pills.
-  * **Navigation:** Reveal a subtle top-left `Back` button (`opacity: 0 -> 1`, `translateX(-4px -> 0)`) that lets the user reverse the morph back to Step 1 without losing state.
+## Verification / OTP
 
----
+Prefer one semantic input with `inputMode="numeric"`, `autoComplete="one-time-code"`,
+a visible label, descriptive error, and a submit action. This preserves native paste,
+selection, keyboard editing, and autofill. Separate inputs require actual ref-based
+focus movement, paste distribution, Backspace, arrow keys, and accessible grouping;
+a highlighted slot is not focus.
 
-## 3. Responsive Pill-Collapsing Data Table (Elvish / Cobra Pattern)
-When a user resizes a table column, split pane, or dashboard card:
-* Never let text clip harshly with `overflow: hidden` mid-word or wrap into ugly multi-line vertical towers.
-* Measure the container width via `ResizeObserver`.
-* As width decreases, smoothly collapse secondary tags/pills (`scale(0.92)`, `opacity: 0`, `140ms`) into a single `+N more` counter pill that animates in seamlessly.
-* As the user drags the column wider, progressively reveal the individual pills back into view.
+Validate format before submission. A server verifies the secret; never ship an expected
+code to the client. Prevent duplicate verification with an in-flight guard and a
+disabled action. Abort on cancel/unmount and ignore late responses. Announce status
+without narrating animation frames. Keep errors readable; provide clear-and-retry
+instead of silently losing input. A digit entrance or 180ms shake is optional;
+reduced motion uses static feedback.
 
----
+## Loading and content handoff
 
-## 4. Streaming AI Text with Leading Gradient Mask (Cobra.systems Pattern)
-Standard token-by-token streaming text looks robotic and jagged.
-* Wrap newly arriving text chunks in a span that animates from `opacity: 0; filter: blur(2px)` to `opacity: 1; filter: blur(0px)` over `180ms`.
-* Apply a subtle linear-gradient text mask on the active streaming line so the leading edge fades in softly rather than popping in character by character.
+Reserve real media/text dimensions. Show a skeleton when loading needs feedback,
+without an artificial minimum delay. Render fast results directly. Hide decorative
+skeletons from assistive technology, keep one status message, mark loading regions
+busy, and do not steal focus when background content arrives. Content is usable
+immediately. A pulse needs `motion-reduce:animate-none`; static placeholders are fine.
 
----
+## Resizable tables and collapsing pills
 
-## 5. Skeleton Loader to Real Content Cross-Fade (Transitions.dev Essentials)
-* Never jump abruptly from a spinner to rendered data.
-* Match the skeleton placeholder dimensions to the exact typography line-height and avatar dimensions of the real component.
-* Keep the skeleton pulse subtle (`opacity: 0.4` to `0.75` over `1.5s ease-in-out infinite`, never harsh flashing).
-* When data resolves, cross-fade the skeleton out (`150ms`) while fading the real content in (`200ms`, `translateY(2px -> 0)`).
+Measure available width with ResizeObserver, separate reads from writes, and clean up.
+Choose essential columns/tags before hiding anything. Recompute for content/font
+changes too. Collapse secondary tags into a named `+N more` button opening an
+accessible list/popover. Retain table semantics and keyboard operation. Use contained
+horizontal scrolling for genuinely wide data. Repeated resize must not queue motion
+or delay the data layout. Never hide the only accessible copy of information.
 
----
+## Streaming text
 
-## 6. Subtle Audio-Visual Pairing
-For high-craft interactive components (like multi-step question cards, toggles, or OTP completion):
-* Provide an optional, opt-in Web Audio API synthesizer hook (muted if `prefers-reduced-motion` is enabled) that plays a `<15ms` soft low-pass filtered click (`180Hz-400Hz`, volume `0.04`) synchronized with the visual spring transition.
+Default to immediate readable chunks for frequent updates. If it aids tracking, use
+at most a 120ms chunk opacity change; avoid per-character spans, delayed words, and
+masks over readable history. Preserve selection and scroll position unless the user
+is already at the end. Announce completion rather than every token. Reduced motion
+renders chunks immediately.
+
+## Logo cycles and workflow demonstrations
+
+Keep explanatory copy visible outside the animation and use only verified customer
+logos with permission. Default to a static grid. If space requires cycling, provide
+Pause/Resume, keep geometry stable, avoid automatic replacement announcements, and
+pause offscreen or in hidden tabs. Hover/focus pause is a convenience, not the only
+control. Reduced motion shows a static set and a way to view all. W3C's pause/stop/hide
+criterion has specific conditions; do not apply a blanket rule to all brief feedback.
+
+## Audio, success, and error
+
+Sound is opt-in and never the only feedback. Motion and sound preferences are separate.
+Use success/error text without confetti. Copy can simply change to “Copied” with a
+polite status. Failures need Retry and the information needed to recover.
+
+Sources: [WAI dialogs](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/),
+[Family Values](https://benji.org/family-values),
+[Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html).

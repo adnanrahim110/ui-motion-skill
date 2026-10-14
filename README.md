@@ -1,183 +1,235 @@
-<div align="center">
+# UI Motion Skill for AI Coding Agents
 
-# ⚡ `ui-motion-skill`
+**Teach your coding agent when to animate, what to animate, and when to keep the interface still.**
 
-**Science-Backed UI/UX Animation & Motion Engineering Skill for AI Coding Agents**
+`ui-motion-skill` is a reusable Agent Skill for UI animation and motion design. It
+combines a decision framework, primary-source references, and typed React patterns
+for accessible micro-interactions, dialogs, scroll storytelling, parallax, and pointer effects.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-00e5ff?style=flat-square)](https://github.com/adnanrahim110/ui-motion-skill)
-[![SKILL.md Standard](https://img.shields.io/badge/standard-SKILL.md-10b981?style=flat-square)](https://github.com/adnanrahim110/ui-motion-skill)
-[![Author](https://img.shields.io/badge/author-@adnanrahim110-8b5cf6?style=flat-square)](https://github.com/adnanrahim110)
-[![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](./LICENSE)
+**Claude Code · Codex · Cursor · Antigravity · Windsurf · GitHub Copilot · Gemini CLI · Cline · Roo Code**
 
-**Works across every major AI coding agent on your PC:**
+[![MIT license](https://img.shields.io/badge/license-MIT-171717?style=flat-square)](LICENSE)
+[![Installer runtime](https://img.shields.io/badge/installer-Node.js_18%2B-171717?style=flat-square)](package.json)
+[![Runtime dependencies](https://img.shields.io/badge/runtime_dependencies-0-171717?style=flat-square)](package.json)
 
-`Claude Code` • `Cursor` • `OpenAI Codex` • `Google Antigravity` • `Windsurf` • `GitHub Copilot` • `Gemini CLI` • `Cline / Roo`
+[Install](#install) · [Use the skill](#use-the-skill) · [Motion decisions](#motion-decisions) · [Code assets](#code-assets) · [References](#references) · [Development](#development)
 
-</div>
+## Install
 
----
+Run this in your terminal:
 
-## Why This Skill Exists
-
-When you ask an AI coding agent to add animations, it defaults to generic slop: unprompted scroll fade-ins on every paragraph, `scale(0)` entrances, linear easings, slow modal exits, and bloated motion inside post-login dashboards where users just want speed.
-
-**`ui-motion-skill`** implants the decision-making brain of top design engineers and HCI scientists directly into your AI agents:
-
-- **Manu Arora** (_Aceternity UI / Vibrant.design_): Marketing vs. Post-Login context routing, the 50-clicks-a-day rule, gradual revelation in morphing modals, the Removal Test, and asymmetric entry/exit timing.
-- **Emil Kowalski** (_Linear / Vercel / Animations.dev_): Physical scale floors (`scale >= 0.94`), origin-aware popovers, blur-bridged icon morphing, sub-300ms UI budgets, and custom cubic-beziers.
-- **Rauno Freiberg** (_Vercel / Invisible Details of Interaction Design_): Mid-flight interruptibility, input-device fidelity (`Cmd+K` mechanical speed vs. gesture momentum), and spatial metaphors.
-- **Benji Taylor** (_Family / SpaceX_): The Delight-Impact Curve, progressive disclosure, and zero element duplication (object permanence).
-- **Google Chrome Team & Apple HIG**: Native CSS `scroll()` / `view()` compositor timelines, FLIP layout morphs, and velocity-preserving spring physics.
-- **HCI Cognitive Laws**: Walter Doherty's `<400ms` threshold, Jakob Nielsen's Change Blindness prevention, Fitts's Law hit-area expansion, and Hick's Law.
-
----
-
-## 🚀 Quick Install (Interactive Terminal Stepper)
-
-Run a single command in your terminal using your favorite package manager. The interactive stepper automatically detects which AI agents are installed on your PC and pre-selects them for you:
-
-### `npx`
-
-```bash
+```sh
 npx github:adnanrahim110/ui-motion-skill
-# Or via npm:
-npx ui-motion-skill
 ```
 
-### `pnpm`
+The installer asks where to install, which agents to configure, and which files
+to write. Targets with command, configuration, or extension evidence are selected
+by default. You can select undetected agents or deselect any suggested target.
 
-```bash
+```text
+Step 1 of 3: Choose installation scope
+> (*) Global — available across local projects
+  ( ) Current project — share through version control
+  ( ) Both global and current project
+
+Step 2 of 3: Select AI agents
+> [x] Claude Code (claude) — configuration found: ~/.claude
+  [ ] Roo Code (roo) — no evidence; select manually if needed
+
+Step 3 of 3: Review and install
+```
+
+Use arrow keys to move, Space to select agents, `a` to toggle all, Enter to continue,
+or Escape/Ctrl+C to cancel. Choose project scope from the directory where you want
+the skill installed. The installer requires Node.js 18+; GitHub package installation
+also requires Git.
+
+<details>
+<summary>Other package managers and installation methods</summary>
+
+With pnpm:
+
+```sh
 pnpm dlx github:adnanrahim110/ui-motion-skill
 ```
 
-### `bun`
+With Bun:
 
-```bash
+```sh
 bunx github:adnanrahim110/ui-motion-skill
 ```
 
-### Universal `skills` CLI
+Install the CLI globally with npm, then run the wizard:
 
-```bash
-npx skills add adnanrahim110/ui-motion-skill -g --all
+```sh
+npm install --global github:adnanrahim110/ui-motion-skill
+ui-motion-skill
 ```
 
----
+Or use the separate [Agent Skills CLI](https://github.com/vercel-labs/skills), which
+manages its own agent selection and destination paths:
 
-## 🖥️ Interactive Terminal Setup Preview
+```sh
+npx skills add adnanrahim110/ui-motion-skill --skill ui-motion -g
+```
 
-When you run the installer, it guides you through a 3-step terminal wizard:
+Package-name commands such as `npx ui-motion-skill` require a published npm release.
+The GitHub commands above install from this repository.
+
+</details>
+
+### Choose targets explicitly
+
+Preview destinations without writing files:
+
+```sh
+npx github:adnanrahim110/ui-motion-skill --global --all --dry-run
+```
+
+Install into the current project for selected agents:
+
+```sh
+npx github:adnanrahim110/ui-motion-skill --project --agent claude,cursor -y
+```
+
+| Option | Behavior |
+| --- | --- |
+| `--global`, `--project`, `--both` | Choose installation scope. Global is the default. |
+| `--agent claude,codex` | Select IDs explicitly; the flag can be repeated. |
+| `--all` | Select all nine supported targets, including undetected ones. |
+| `--yes`, `-y` | Run without the wizard; use detected targets when none are specified. |
+| `--dry-run` | Check the planned files and report changes without writing. |
+| `--force` | Back up and replace differing skill files. |
+| `--rules` | Add short pointers to project rule files with `--project` or `--both`. |
+| `--list`, `--help` | Inspect detection evidence or command help. |
+
+Conflicting local files stop installation unless replacement is requested. Identical
+files are skipped, and failed writes trigger a rollback attempt. See
+[installation safety, paths, and host limitations](docs/compatibility.md).
+
+Some hosts use shared `.agents/skills` paths; another compatible agent may discover
+those files too. Detection is a hint, and local installation does not sync cloud sessions.
+
+## Use the skill
+
+Ask your agent to use `ui-motion` on a specific interaction. Invocation depends on
+the host: `$ui-motion` in Codex, `/ui-motion` in Claude Code, or `@ui-motion` in Cascade.
+Reload skills or restart the host if the new skill does not appear.
+
+**Review an existing interaction**
+
+> Use ui-motion to audit this dashboard filter. It is used repeatedly throughout the
+> day. Identify motion that adds delay or obscures the selected state. Report findings
+> before changing code.
+
+**Build a progressive flow**
+
+> Use ui-motion for this upload, review, and confirmation dialog. Keep one shell,
+> preserve Back state, cancel stale work, and define the motion contract before coding.
+
+**Explain a workflow on a landing page**
+
+> Use ui-motion to show how this workflow changes from manual review to an organized
+> process. Keep the explanation readable on mobile and with reduced motion.
+
+Automatic selection depends on the host, its configuration, and the task. The skill
+supplies guidance; your application's design system and requirements remain authoritative.
+
+## Motion decisions
+
+Every proposed effect passes five gates:
 
 ```text
-  UI-MOTION SKILL  v1.0.0 • by @adnanrahim110
-  Science-backed UI/UX animation engineering for AI coding agents
-  ─────────────────────────────────────────────────────────────────
-
-  ✔ Where do you want to install this skill?: Global (PC-wide)
-  │
-  ◆ Step 2 of 3: Select AI agents to configure
-  │ Agents detected on your PC are pre-selected by default.
-  │
-  │ ❯ [✓] Claude Code          (~/.claude/skills/ui-motion)           ● detected on PC
-  │   [✓] Cursor               (~/.cursor/skills/ui-motion)           ● detected on PC
-  │   [✓] OpenAI Codex CLI     (~/.codex/skills/ui-motion)            ● detected on PC
-  │   [✓] Google Antigravity   (~/.gemini/antigravity/skills/...)     ● detected on PC
-  │   [ ] Windsurf             (~/.codeium/windsurf/skills/...)       ○ not detected
-  │   [ ] GitHub Copilot       (~/.copilot/skills/ui-motion)          ○ not detected
-  │
-  └─ ↑/↓ move • Space toggle • 'a' toggle all • Enter confirm (4 selected)
+Context → Frequency and input → Useful purpose → Removal test → Execution contract
 ```
 
-### Non-Interactive One-Liner Flags (CI / Dotfiles)
+| Situation | Decision |
+| --- | --- |
+| A filter, tab, or command used repeatedly | Change state immediately. |
+| A complex multi-step operation | Keep one dialog, preserve context, and manage actual focus. |
+| A marketing workflow that is hard to explain | Use a bounded demonstration with a complete static narrative. |
+| A hover effect on a hybrid touch laptop | Check pointer capability and the actual input event. |
+| A reduced-motion preference | Preserve information and actions while removing spatial movement. |
 
-```bash
-# Install globally to all detected agents on your PC without prompts
-npx github:adnanrahim110/ui-motion-skill --global -y
+When motion helps, the agent specifies the trigger, properties, timing or scroll
+mapping, easing, interruption behavior, reduced-motion behavior, and fallback.
+For example, an occasional dialog may enter over 220ms with
+`cubic-bezier(0.16, 1, 0.3, 1)` and close immediately. These are chosen defaults,
+not scientific constants.
 
-# Install into the current repository only (for Git team sharing)
-npx github:adnanrahim110/ui-motion-skill --project -y
+## Code assets
 
-# Force install globally across all 8 supported agent directories
-npx github:adnanrahim110/ui-motion-skill --all -y
+The assets are small, typed components with explicit responsibilities. They contain
+no stock landing-page sections, invented customer logos, simulated server delays,
+or client-side OTP secrets. Copy the relevant pattern and adapt it to your application.
+
+| Asset | What it handles |
+| --- | --- |
+| [Progressive dialog](skills/ui-motion/assets/react/progressive-dialog.tsx) | Your content and step state; native modal behavior, focus handoff, resize motion, and an inline fallback. |
+| [Verification code](skills/ui-motion/assets/react/verification-code.tsx) | Native paste/autofill, server verification callback, duplicate prevention, cancellation, and recovery. |
+| [Magnetic button](skills/ui-motion/assets/react/magnetic-button.tsx) | A fixed hit target, bounded inner movement, pointer gating, and cleanup. |
+| [Scroll story](skills/ui-motion/assets/react/scroll-story.tsx) | Your narrative, crawlable step links, readable content, and a section progress rail. |
+| [Reading progress](skills/ui-motion/assets/react/scroll-progress.tsx) | Document progress with layout-change tracking and reduced-motion handling. |
+
+Shared helpers handle [media preferences](skills/ui-motion/assets/react/motion-policy.ts)
+and [scroll timeline cleanup](skills/ui-motion/assets/react/scroll-timeline.ts).
+The [integration guide](skills/ui-motion/references/05-code-recipes.md) documents each
+contract, dependencies, and the responsibilities that stay with the consuming app.
+
+React examples use TypeScript, Tailwind utilities, and Motion where it helps. Other
+frameworks can use the decision and engineering references without adopting React
+or changing their existing animation stack.
+
+## References
+
+The entrypoint [SKILL.md](skills/ui-motion/SKILL.md) loads only the relevant reference.
+
+| Guide | Coverage |
+| --- | --- |
+| [Philosophy and evidence](skills/ui-motion/references/01-philosophy-and-science.md) | Purpose, interaction frequency, research models, and attribution limits. |
+| [Timing, easing, and springs](skills/ui-motion/references/02-timing-easing-and-springs.md) | Functional budgets, custom curves, interruption, and exceptions. |
+| [Micro-interactions](skills/ui-motion/references/03-microinteractions-and-components.md) | OTP, dialogs, loading, streaming text, responsive tables, and logo cycles. |
+| [Scroll, parallax, and pointer effects](skills/ui-motion/references/04-scroll-parallax-and-cursor.md) | Native timelines, scrollytelling, magnetic/spotlight/tilt effects, FLIP, and view transitions. |
+| [Code integration](skills/ui-motion/references/05-code-recipes.md) | Runnable source, motion contracts, and application boundaries. |
+| [Primary sources](skills/ui-motion/references/06-sources.md) | Exact references and what each supports. |
+| [Validation](skills/ui-motion/references/07-validation.md) | Acceptance checks and realistic evaluation scenarios. |
+
+The brief began with Manu Arora's restraint-first animation principles. Further
+references include Emil Kowalski, Rauno Freiberg, Benji Taylor, Apple, W3C, and Chrome
+engineering guidance. Attribution does not imply endorsement.
+
+## Development
+
+Use Node.js 22.18+ or 24.11+ for development. The installer runtime supports Node.js 18+.
+
+```sh
+npm ci
+npm run check
+npm run lint
+npm run typecheck
+npm test
+npm run test:package
 ```
 
----
+Checks cover source structure, local links, strict types, installer behavior,
+React behavior in Node/jsdom, and installation from the packed artifact. CI is
+configured for Windows/Linux checks plus a Node.js 18 runtime job. Visual rendering,
+native focus containment, real autofill, and frame rate require application-level
+browser verification. No browser is launched by these commands.
 
-## 🧠 How the Agent Decision Engine Works
+Changes should include a concrete use case and verification for the behavior they
+affect. Keep defaults separate from research claims and preserve the static experience.
+Maintainers can preview and apply the repository description/topics using the
+[discoverability guide](docs/discoverability.md).
 
-Every time your coding agent touches frontend UI, it runs this strict 5-Gate Pipeline before writing a single line of motion code:
+## Updating or removing an installation
 
-```text
-User Prompt / UI Task
-  │
-  ├─► Gate 1: Context Routing
-  │     ├── Marketing / Landing Page? ──► 10-15s impression window: Allow animated Bento grids,
-  │     │                                  4-item logo flippers, & Crafa scroll storytelling.
-  │     └── Post-Login Dashboard / App? ─► Strip decorative motion. Speed & utility win.
-  │
-  ├─► Gate 2: Frequency & Input Filter
-  │     ├── Clicked 50+ times/day or Cmd+K shortcut? ──► STOP (0ms instant state change).
-  │     └── Occasional or milestone interaction? ──────► Proceed to Gate 3.
-  │
-  ├─► Gate 3: The 4 Valid Purposes Check
-  │     ├── 1. Explain something complex visually?
-  │     ├── 2. Add tactile delight & immediate trust?
-  │     ├── 3. Gradual revelation (progressive disclosure)?
-  │     └── 4. Maintain spatial continuity / prevent change blindness?
-  │         (If NONE match ──► REJECT ANIMATION)
-  │
-  ├─► Gate 4: The Removal Test
-  │     └── "If I delete this animation, does the app feel faster and cleaner without
-  │          losing clarity?" (If YES ──► DELETE IT)
-  │
-  └─► Gate 5: Physics & Compositor Execution
-        ├── Sub-300ms UI budget (Entry: 180-250ms | Exit: 100-150ms)
-        ├── Scale floor: Never scale(0), enter from scale(0.94-0.97) + opacity(0)
-        ├── Origin-aware transform-origin on popovers/dropdowns
-        ├── Blur-bridged icon/state morphs (filter: blur(2px))
-        └── Mandatory @media (prefers-reduced-motion: reduce) & pointer gating
-```
+Rerun the installer with the same targets. If local files differ, inspect them before
+using `--force`; replacements save adjacent `.ui-motion-backup-*` files. Unrelated
+files and older installations are preserved. See [compatibility notes](docs/compatibility.md)
+for migration and recovery details.
 
----
+To uninstall, inspect local edits, remove the selected `ui-motion` folder, and remove
+its marked rule-pointer block if one was installed. Then refresh the agent's skill list.
 
-## ✨ Full-Spectrum Animation Coverage
-
-| Category                      | What the Skill Teaches Your Agent                                                                                                                           | Reference File                           |
-| :---------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------- |
-| **Philosophy & HCI Science**  | Manu Arora's Removal Test, Benji Taylor's Delight-Impact Curve, Doherty Threshold (`<400ms`), Fitts's Law static hit-boxes, Change Blindness.               | `01-philosophy-and-science.md`           |
-| **Timing, Easing & Springs**  | Custom `--ease-out-quint` & `--ease-drawer` curves, duration budgets per component, asymmetric entry/exit math, Framer Motion spring presets.               | `02-timing-easing-and-springs.md`        |
-| **Micro-Interactions**        | Cobra.systems OTP input (shimmer + green pulse + error shake), single-modal gradual revelation, pill-collapsing resizable tables, streaming text gradients. | `03-microinteractions-and-components.md` |
-| **Scroll, Parallax & Cursor** | Native CSS `scroll()` & `view()` timelines, Crafa before/after pinned scrollytelling, GPU `translate3d` parallax ratios, magnetic buttons, spotlight cards. | `04-scroll-parallax-and-cursor.md`       |
-| **Production Code Recipes**   | Ready-to-drop React, Tailwind CSS, and Framer Motion (`motion/react`) components.                                                                           | `05-code-recipes.md`                     |
-
----
-
-## 🔄 Before vs. After Installing `ui-motion-skill`
-
-| Scenario                          | Without `ui-motion-skill` (Default AI Output)                                                             | With `ui-motion-skill` Installed                                                                                                                             |
-| :-------------------------------- | :-------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Multi-step Meal Tracker Modal** | Dumps 8 inputs into one tall modal or opens a second modal on submit with `transition: all 0.5s ease-in`. | Morphs a single container in-place (`ResizeObserver` + spring height), cross-fades steps with `blur(3px)`, adds an inline back button, and exits in `120ms`. |
-| **Dashboard Sidebar & Buttons**   | Adds bouncy `350ms` hover/click transitions to tabs clicked 50 times a day.                               | Enforces `0ms` instant tab switching and crisp `100ms` `scale(0.97)` tactile press feedback.                                                                 |
-| **OTP Verification Input**        | Renders 6 static `<input>` boxes with browser default outlines.                                           | Implements sliding layout focus ring, `140ms` digit entry, verification shimmer sweep, emerald success state, and `320ms` horizontal error shake.            |
-| **Scroll Effects**                | Attaches `window.addEventListener('scroll')` and fades in every `<p>` tag on the page.                    | Rejects paragraph fade-ins; uses compositor-thread CSS `animation-timeline: view()` or pinned before/after product storytelling.                             |
-
----
-
-## 📂 Where Skills Are Installed on Your PC
-
-| AI Agent               | Global PC Path                            | Project Path                  |
-| :--------------------- | :---------------------------------------- | :---------------------------- |
-| **Claude Code**        | `~/.claude/skills/ui-motion/`             | `.claude/skills/ui-motion/`   |
-| **Cursor**             | `~/.cursor/skills/ui-motion/`             | `.cursor/skills/ui-motion/`   |
-| **OpenAI Codex**       | `~/.codex/skills/ui-motion/`              | `.codex/skills/ui-motion/`    |
-| **Google Antigravity** | `~/.gemini/antigravity/skills/ui-motion/` | `.agents/skills/ui-motion/`   |
-| **Windsurf**           | `~/.codeium/windsurf/skills/ui-motion/`   | `.windsurf/skills/ui-motion/` |
-| **GitHub Copilot**     | `~/.copilot/skills/ui-motion/`            | `.github/skills/ui-motion/`   |
-| **Gemini CLI**         | `~/.gemini/skills/ui-motion/`             | `.gemini/skills/ui-motion/`   |
-| **Cline / Roo Code**   | `~/.cline/skills/ui-motion/`              | `.cline/skills/ui-motion/`    |
-
----
-
-## Author & Credits
-
-Created and maintained by **Adnan Rahim** ([@adnanrahim110](https://github.com/adnanrahim110)).
+Created by [Adnan Rahim](https://github.com/adnanrahim110). [MIT licensed](LICENSE).
