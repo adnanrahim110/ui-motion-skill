@@ -1,7 +1,7 @@
 {
   "name": "ui-motion-skill",
   "version": "1.1.0",
-  "description": "UI animation and motion design skill for AI coding agents: accessible micro-interactions, scroll effects, and an interactive CLI installer.",
+  "description": "UI animation skill for Claude Code, Cursor, and Codex. Make dialogs feel right, keep filters instant, and handle reduced motion. Includes React and Framer Motion examples.",
   "type": "module",
   "bin": {
     "ui-motion-skill": "./bin/cli.mjs",
@@ -13,7 +13,10 @@
     "skills/",
     "README.md",
     "LICENSE",
-    "docs/compatibility.md"
+    "docs/compatibility.md",
+    "docs/installation.md",
+    "docs/discoverability.md",
+    "docs/assets/"
   ],
   "scripts": {
     "start": "node ./bin/cli.mjs",
@@ -35,13 +38,13 @@
   },
   "keywords": [
     "agent-skills",
-    "ai-coding-agents",
     "ui-motion",
-    "motion-design",
-    "skill-md",
     "claude-code",
+    "claude-code-skills",
     "cursor",
+    "cursor-skills",
     "codex",
+    "codex-skills",
     "antigravity",
     "windsurf",
     "github-copilot",
@@ -49,19 +52,16 @@
     "cline",
     "roo-code",
     "ui-animation",
-    "micro-interactions",
+    "react-animation",
+    "framer-motion",
+    "microinteractions",
     "accessibility",
     "reduced-motion",
     "react",
     "tailwindcss",
     "motion",
-    "framer-motion",
-    "design-engineering",
     "css-animations",
-    "scrollytelling",
-    "scroll-driven-animations",
-    "parallax",
-    "cursor-effects"
+    "scroll-animation"
   ],
   "author": "Adnan Rahim <https://github.com/adnanrahim110>",
   "license": "MIT",

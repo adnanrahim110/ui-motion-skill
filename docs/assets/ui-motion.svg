@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="336" viewBox="0 0 1200 336" role="img" aria-labelledby="title description">
+  <title id="title">UI Motion</title>
+  <desc id="description">An easing curve illustrates a 220 millisecond dialog entrance. Repeated controls change state immediately.</desc>
+  <rect width="1200" height="336" rx="16" fill="#142b45"/>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="56" y="130" fill="#f5f8fc" font-size="88" font-weight="700" letter-spacing="-4">UI Motion</text>
+    <text x="60" y="181" fill="#c8d8eb" font-size="28">Dialogs, scroll effects,</text>
+    <text x="60" y="219" fill="#c8d8eb" font-size="28">and the timing between states.</text>
+    <path d="M680 220H1136 M680 220V60" fill="none" stroke="#708ca9" stroke-width="2"/>
+    <path d="M680 220V60H1136" fill="none" stroke="#708ca9" stroke-width="2" stroke-dasharray="4 8"/>
+    <path d="M680 220C753 60 817 60 1136 60" fill="none" stroke="#aac7ff" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="680" cy="220" r="7" fill="#142b45" stroke="#aac7ff" stroke-width="3"/>
+    <circle cx="1136" cy="60" r="7" fill="#aac7ff"/>
+    <text x="1136" y="180" fill="#f5f8fc" font-size="48" font-weight="600" text-anchor="end">220 ms</text>
+    <text x="1136" y="208" fill="#c8d8eb" font-size="20" text-anchor="end">dialog entrance</text>
+    <path d="M56 259H1144" fill="none" stroke="#708ca9" stroke-width="1"/>
+    <text x="60" y="303" fill="#f5f8fc" font-size="24">Make the dialog feel right. Keep the filter instant.</text>
+  </g>
+</svg>

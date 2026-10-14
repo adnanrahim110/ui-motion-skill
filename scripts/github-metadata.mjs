@@ -16,12 +16,14 @@ console.log(JSON.stringify(metadata, null, 2));
 if (args.includes('--apply')) {
   const current = JSON.parse(execFileSync('gh', ['api', `repos/${metadata.repository}`], { encoding: 'utf8' }));
   assert.equal(current.full_name, metadata.repository);
-  const combined = [...new Set([...(current.topics ?? []), ...metadata.topics])];
-  assert.ok(combined.length <= 20, 'Existing topics plus the proposed topics exceed GitHub’s limit. Review the selection first.');
-  execFileSync('gh', ['repo', 'edit', metadata.repository, '--description', metadata.description, '--add-topic', metadata.topics.join(',')], { stdio: 'pipe' });
+  execFileSync('gh', ['repo', 'edit', metadata.repository, '--description', metadata.description], { stdio: 'pipe' });
+  execFileSync('gh', ['api', '--method', 'PUT', `repos/${metadata.repository}/topics`, '--input', '-'], {
+    input: JSON.stringify({ names: metadata.topics }),
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
   const updated = JSON.parse(execFileSync('gh', ['api', `repos/${metadata.repository}`], { encoding: 'utf8' }));
   assert.equal(updated.description, metadata.description);
-  assert.ok(metadata.topics.every((topic) => updated.topics.includes(topic)));
+  assert.deepEqual([...updated.topics].sort(), [...metadata.topics].sort());
   console.log(`Verified live description and ${updated.topics.length} topics on ${updated.html_url}.`);
 } else {
   console.log('Preview only. Add --apply to update the authorized repository.');
