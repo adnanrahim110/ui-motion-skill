@@ -23,10 +23,10 @@ When you ask an AI coding agent to add animations, it defaults to generic slop: 
 
 **`ui-motion-skill`** implants the decision-making brain of top design engineers and HCI scientists directly into your AI agents:
 
-- **Manu Arora** (*Aceternity UI / Vibrant.design*): Marketing vs. Post-Login context routing, the 50-clicks-a-day rule, gradual revelation in morphing modals, the Removal Test, and asymmetric entry/exit timing.
-- **Emil Kowalski** (*Linear / Vercel / Animations.dev*): Physical scale floors (`scale >= 0.94`), origin-aware popovers, blur-bridged icon morphing, sub-300ms UI budgets, and custom cubic-beziers.
-- **Rauno Freiberg** (*Vercel / Invisible Details of Interaction Design*): Mid-flight interruptibility, input-device fidelity (`Cmd+K` mechanical speed vs. gesture momentum), and spatial metaphors.
-- **Benji Taylor** (*Family / SpaceX*): The Delight-Impact Curve, progressive disclosure, and zero element duplication (object permanence).
+- **Manu Arora** (_Aceternity UI / Vibrant.design_): Marketing vs. Post-Login context routing, the 50-clicks-a-day rule, gradual revelation in morphing modals, the Removal Test, and asymmetric entry/exit timing.
+- **Emil Kowalski** (_Linear / Vercel / Animations.dev_): Physical scale floors (`scale >= 0.94`), origin-aware popovers, blur-bridged icon morphing, sub-300ms UI budgets, and custom cubic-beziers.
+- **Rauno Freiberg** (_Vercel / Invisible Details of Interaction Design_): Mid-flight interruptibility, input-device fidelity (`Cmd+K` mechanical speed vs. gesture momentum), and spatial metaphors.
+- **Benji Taylor** (_Family / SpaceX_): The Delight-Impact Curve, progressive disclosure, and zero element duplication (object permanence).
 - **Google Chrome Team & Apple HIG**: Native CSS `scroll()` / `view()` compositor timelines, FLIP layout morphs, and velocity-preserving spring physics.
 - **HCI Cognitive Laws**: Walter Doherty's `<400ms` threshold, Jakob Nielsen's Change Blindness prevention, Fitts's Law hit-area expansion, and Hick's Law.
 
@@ -37,6 +37,7 @@ When you ask an AI coding agent to add animations, it defaults to generic slop: 
 Run a single command in your terminal using your favorite package manager. The interactive stepper automatically detects which AI agents are installed on your PC and pre-selects them for you:
 
 ### `npx`
+
 ```bash
 npx github:adnanrahim110/ui-motion-skill
 # Or via npm:
@@ -44,16 +45,19 @@ npx ui-motion-skill
 ```
 
 ### `pnpm`
+
 ```bash
 pnpm dlx github:adnanrahim110/ui-motion-skill
 ```
 
 ### `bun`
+
 ```bash
 bunx github:adnanrahim110/ui-motion-skill
 ```
 
 ### Universal `skills` CLI
+
 ```bash
 npx skills add adnanrahim110/ui-motion-skill -g --all
 ```
@@ -138,44 +142,42 @@ User Prompt / UI Task
 
 ## ✨ Full-Spectrum Animation Coverage
 
-| Category | What the Skill Teaches Your Agent | Reference File |
-| :--- | :--- | :--- |
-| **Philosophy & HCI Science** | Manu Arora's Removal Test, Benji Taylor's Delight-Impact Curve, Doherty Threshold (`<400ms`), Fitts's Law static hit-boxes, Change Blindness. | `01-philosophy-and-science.md` |
-| **Timing, Easing & Springs** | Custom `--ease-out-quint` & `--ease-drawer` curves, duration budgets per component, asymmetric entry/exit math, Framer Motion spring presets. | `02-timing-easing-and-springs.md` |
-| **Micro-Interactions** | Cobra.systems OTP input (shimmer + green pulse + error shake), single-modal gradual revelation, pill-collapsing resizable tables, streaming text gradients. | `03-microinteractions-and-components.md` |
-| **Scroll, Parallax & Cursor** | Native CSS `scroll()` & `view()` timelines, Crafa before/after pinned scrollytelling, GPU `translate3d` parallax ratios, magnetic buttons, spotlight cards. | `04-scroll-parallax-and-cursor.md` |
-| **Production Code Recipes** | Ready-to-drop React, Tailwind CSS, and Framer Motion (`motion/react`) components. | `05-code-recipes.md` |
+| Category                      | What the Skill Teaches Your Agent                                                                                                                           | Reference File                           |
+| :---------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------- |
+| **Philosophy & HCI Science**  | Manu Arora's Removal Test, Benji Taylor's Delight-Impact Curve, Doherty Threshold (`<400ms`), Fitts's Law static hit-boxes, Change Blindness.               | `01-philosophy-and-science.md`           |
+| **Timing, Easing & Springs**  | Custom `--ease-out-quint` & `--ease-drawer` curves, duration budgets per component, asymmetric entry/exit math, Framer Motion spring presets.               | `02-timing-easing-and-springs.md`        |
+| **Micro-Interactions**        | Cobra.systems OTP input (shimmer + green pulse + error shake), single-modal gradual revelation, pill-collapsing resizable tables, streaming text gradients. | `03-microinteractions-and-components.md` |
+| **Scroll, Parallax & Cursor** | Native CSS `scroll()` & `view()` timelines, Crafa before/after pinned scrollytelling, GPU `translate3d` parallax ratios, magnetic buttons, spotlight cards. | `04-scroll-parallax-and-cursor.md`       |
+| **Production Code Recipes**   | Ready-to-drop React, Tailwind CSS, and Framer Motion (`motion/react`) components.                                                                           | `05-code-recipes.md`                     |
 
 ---
 
 ## 🔄 Before vs. After Installing `ui-motion-skill`
 
-| Scenario | Without `ui-motion-skill` (Default AI Output) | With `ui-motion-skill` Installed |
-| :--- | :--- | :--- |
+| Scenario                          | Without `ui-motion-skill` (Default AI Output)                                                             | With `ui-motion-skill` Installed                                                                                                                             |
+| :-------------------------------- | :-------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Multi-step Meal Tracker Modal** | Dumps 8 inputs into one tall modal or opens a second modal on submit with `transition: all 0.5s ease-in`. | Morphs a single container in-place (`ResizeObserver` + spring height), cross-fades steps with `blur(3px)`, adds an inline back button, and exits in `120ms`. |
-| **Dashboard Sidebar & Buttons** | Adds bouncy `350ms` hover/click transitions to tabs clicked 50 times a day. | Enforces `0ms` instant tab switching and crisp `100ms` `scale(0.97)` tactile press feedback. |
-| **OTP Verification Input** | Renders 6 static `<input>` boxes with browser default outlines. | Implements sliding layout focus ring, `140ms` digit entry, verification shimmer sweep, emerald success state, and `320ms` horizontal error shake. |
-| **Scroll Effects** | Attaches `window.addEventListener('scroll')` and fades in every `<p>` tag on the page. | Rejects paragraph fade-ins; uses compositor-thread CSS `animation-timeline: view()` or pinned before/after product storytelling. |
+| **Dashboard Sidebar & Buttons**   | Adds bouncy `350ms` hover/click transitions to tabs clicked 50 times a day.                               | Enforces `0ms` instant tab switching and crisp `100ms` `scale(0.97)` tactile press feedback.                                                                 |
+| **OTP Verification Input**        | Renders 6 static `<input>` boxes with browser default outlines.                                           | Implements sliding layout focus ring, `140ms` digit entry, verification shimmer sweep, emerald success state, and `320ms` horizontal error shake.            |
+| **Scroll Effects**                | Attaches `window.addEventListener('scroll')` and fades in every `<p>` tag on the page.                    | Rejects paragraph fade-ins; uses compositor-thread CSS `animation-timeline: view()` or pinned before/after product storytelling.                             |
 
 ---
 
 ## 📂 Where Skills Are Installed on Your PC
 
-| AI Agent | Global PC Path | Project Path |
-| :--- | :--- | :--- |
-| **Claude Code** | `~/.claude/skills/ui-motion/` | `.claude/skills/ui-motion/` |
-| **Cursor** | `~/.cursor/skills/ui-motion/` | `.cursor/skills/ui-motion/` |
-| **OpenAI Codex** | `~/.codex/skills/ui-motion/` | `.codex/skills/ui-motion/` |
-| **Google Antigravity** | `~/.gemini/antigravity/skills/ui-motion/` | `.agents/skills/ui-motion/` |
-| **Windsurf** | `~/.codeium/windsurf/skills/ui-motion/` | `.windsurf/skills/ui-motion/` |
-| **GitHub Copilot** | `~/.copilot/skills/ui-motion/` | `.github/skills/ui-motion/` |
-| **Gemini CLI** | `~/.gemini/skills/ui-motion/` | `.gemini/skills/ui-motion/` |
-| **Cline / Roo Code** | `~/.cline/skills/ui-motion/` | `.cline/skills/ui-motion/` |
+| AI Agent               | Global PC Path                            | Project Path                  |
+| :--------------------- | :---------------------------------------- | :---------------------------- |
+| **Claude Code**        | `~/.claude/skills/ui-motion/`             | `.claude/skills/ui-motion/`   |
+| **Cursor**             | `~/.cursor/skills/ui-motion/`             | `.cursor/skills/ui-motion/`   |
+| **OpenAI Codex**       | `~/.codex/skills/ui-motion/`              | `.codex/skills/ui-motion/`    |
+| **Google Antigravity** | `~/.gemini/antigravity/skills/ui-motion/` | `.agents/skills/ui-motion/`   |
+| **Windsurf**           | `~/.codeium/windsurf/skills/ui-motion/`   | `.windsurf/skills/ui-motion/` |
+| **GitHub Copilot**     | `~/.copilot/skills/ui-motion/`            | `.github/skills/ui-motion/`   |
+| **Gemini CLI**         | `~/.gemini/skills/ui-motion/`             | `.gemini/skills/ui-motion/`   |
+| **Cline / Roo Code**   | `~/.cline/skills/ui-motion/`              | `.cline/skills/ui-motion/`    |
 
 ---
 
 ## Author & Credits
 
 Created and maintained by **Adnan Rahim** ([@adnanrahim110](https://github.com/adnanrahim110)).
-
-Built upon the public engineering work and research of **Manu Arora** ([Vibrant.design](https://vibrant.design), [Aceternity UI](https://ui.aceternity.com)), **Harsh** ([Cobra.systems](https://cobra.systems)), **Emil Kowalski** ([Animations.dev](https://animations.dev)), **Rauno Freiberg** (*Invisible Details of Interaction Design*), **Benji Taylor** ([Family Values](https://benji.org/family-values)), **Transitions.dev**, **Clerk.com**, and the **Google Chrome Rendering Team**.
