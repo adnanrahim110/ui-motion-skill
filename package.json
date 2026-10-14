@@ -1,0 +1,47 @@
+{
+  "name": "ui-motion-skill",
+  "version": "1.0.0",
+  "description": "Science-backed UI/UX animation and motion engineering skill for AI coding agents (Claude Code, Cursor, Codex, Antigravity, Windsurf, Copilot).",
+  "type": "module",
+  "bin": {
+    "ui-motion-skill": "./bin/cli.mjs",
+    "ui-motion": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node ./bin/cli.mjs",
+    "test:help": "node ./bin/cli.mjs --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adnanrahim110/ui-motion-skill.git"
+  },
+  "homepage": "https://github.com/adnanrahim110/ui-motion-skill#readme",
+  "bugs": {
+    "url": "https://github.com/adnanrahim110/ui-motion-skill/issues"
+  },
+  "keywords": [
+    "ai-agent-skill",
+    "skill-md",
+    "claude-code",
+    "cursor",
+    "codex",
+    "antigravity",
+    "windsurf",
+    "ui-animation",
+    "framer-motion",
+    "design-engineering",
+    "css-animations",
+    "scrollytelling"
+  ],
+  "author": "Adnan Rahim <https://github.com/adnanrahim110>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
