@@ -1,9 +1,9 @@
 # Install UI Motion
 
-Run the bundled installer with Node.js 18+ and Git:
+Run the installer with Node.js 18+:
 
 ```sh
-npx github:adnanrahim110/ui-motion-skill
+npx ui-motion-skill
 ```
 
 The wizard asks for a scope, agent selection, and final review. Use the arrow keys
@@ -15,13 +15,13 @@ Escape or Ctrl+C cancels. For a project installation, start in that project's di
 Preview all supported destinations without writing files:
 
 ```sh
-npx github:adnanrahim110/ui-motion-skill --global --all --dry-run
+npx ui-motion-skill --global --all --dry-run
 ```
 
 Install for Claude Code and Cursor in the current project:
 
 ```sh
-npx github:adnanrahim110/ui-motion-skill --project --agent claude,cursor -y
+npx ui-motion-skill --project --agent claude,cursor -y
 ```
 
 | Option | What it does |
@@ -56,19 +56,19 @@ other compatible agents. See [paths and host limitations](compatibility.md).
 With pnpm:
 
 ```sh
-pnpm dlx github:adnanrahim110/ui-motion-skill
+pnpm dlx ui-motion-skill
 ```
 
 With Bun:
 
 ```sh
-bunx github:adnanrahim110/ui-motion-skill
+bunx ui-motion-skill
 ```
 
 Install the CLI globally with npm:
 
 ```sh
-npm install --global github:adnanrahim110/ui-motion-skill
+npm install --global ui-motion-skill
 ui-motion-skill
 ```
 
@@ -79,8 +79,15 @@ agent selection and paths:
 npx skills add adnanrahim110/ui-motion-skill --skill ui-motion -g
 ```
 
-Use the GitHub commands above until the package has an npm release. A package-name
-command such as `npx ui-motion-skill` requires publication to npm.
+To install the tagged GitHub release instead, you also need Git:
+
+```sh
+npx github:adnanrahim110/ui-motion-skill#v1.1.0
+```
+
+The package on [npm](https://www.npmjs.com/package/ui-motion-skill) and the
+[GitHub release](https://github.com/adnanrahim110/ui-motion-skill/releases/tag/v1.1.0)
+contain the same installer and skill files.
 
 ## Update or remove
 

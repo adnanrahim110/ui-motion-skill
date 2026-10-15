@@ -22,12 +22,13 @@ cancellation, reduced motion, and a narrow mobile screen. Run the same
 ## Install
 
 ```sh
-npx github:adnanrahim110/ui-motion-skill
+npx ui-motion-skill
 ```
 
 Choose global or project installation, select your agents, and review the files.
 The wizard suggests agents it finds on your machine; you can change that selection.
-You need **Node.js 18+ and Git**.
+You need **Node.js 18+**. The package is available on
+[npm](https://www.npmjs.com/package/ui-motion-skill).
 
 Already use the [Skills CLI](https://github.com/vercel-labs/skills)?
 
