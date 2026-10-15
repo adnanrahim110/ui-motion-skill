@@ -51,7 +51,7 @@ export function MagneticButton({ children, onClick, disabled = false }: Magnetic
     });
   }
 
-  return <button type="button" onClick={onClick} disabled={disabled} onPointerMove={move} onPointerLeave={reset} onPointerCancel={reset} onBlur={reset} className="min-h-12 min-w-12 rounded-lg bg-blue-800 px-6 py-3 font-medium text-white hover:bg-blue-900 active:bg-blue-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-zinc-600">
-    <span ref={visual} className="pointer-events-none inline-block">{children}</span>
+  return <button type="button" onClick={onClick} disabled={disabled} onPointerMove={move} onPointerLeave={reset} onPointerCancel={reset} onBlur={reset} className="min-h-12 min-w-12 max-w-full rounded-lg bg-blue-800 px-4 py-3 font-medium text-white hover:bg-blue-900 active:bg-blue-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-zinc-600 sm:px-6">
+    <span ref={visual} className="pointer-events-none inline-block max-w-full break-words">{children}</span>
   </button>;
 }

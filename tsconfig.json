@@ -13,5 +13,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["skills/ui-motion/assets/react/**/*.ts", "skills/ui-motion/assets/react/**/*.tsx", "tests/**/*.tsx"]
+  "include": ["skills/ui-motion/assets/react/**/*.ts", "skills/ui-motion/assets/react/**/*.tsx", "tests/**/*.tsx", "demo/src/**/*.ts", "demo/src/**/*.tsx"]
 }

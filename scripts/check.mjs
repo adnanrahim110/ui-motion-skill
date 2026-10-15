@@ -8,15 +8,15 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const filename = path.join(directory, entry.name);
-    return entry.isDirectory() ? walk(filename) : [filename];
+    return entry.isDirectory() ? entry.name === 'dist' ? [] : walk(filename) : [filename];
   });
 }
-const modules = ['bin', 'lib', 'scripts', 'tests'].flatMap((dir) => walk(path.join(root, dir))).filter((filename) => filename.endsWith('.mjs'));
+const modules = ['bin', 'lib', 'scripts', 'tests', 'demo'].flatMap((dir) => walk(path.join(root, dir))).filter((filename) => filename.endsWith('.mjs'));
 for (const filename of modules) {
   const result = spawnSync(process.execPath, ['--check', filename], { encoding: 'utf8' });
   if (result.status !== 0) throw new Error(result.stderr || `Syntax check failed: ${filename}`);
 }
-const codeFiles = [...modules, path.join(root, 'eslint.config.mjs'), ...walk(path.join(root, 'skills')), ...walk(path.join(root, 'tests'))]
+const codeFiles = [...modules, path.join(root, 'eslint.config.mjs'), ...walk(path.join(root, 'skills')), ...walk(path.join(root, 'tests')), ...walk(path.join(root, 'demo/src'))]
   .filter((filename) => /\.(?:mjs|tsx?|jsx?)$/.test(filename));
 for (const filename of new Set(codeFiles)) {
   const content = fs.readFileSync(filename, 'utf8');

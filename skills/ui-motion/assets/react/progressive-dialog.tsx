@@ -126,9 +126,9 @@ export function ProgressiveDialog({
   }
 
   const content = open && (
-    <div ref={surface} className="grid min-w-0 gap-6 p-6">
-      <header className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
+    <div ref={surface} className="grid min-w-0 grid-cols-1 gap-6 p-4 sm:p-6">
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div className="min-w-0 flex-1 basis-40">
           <h2 ref={heading} id={`${id}-title`} tabIndex={-1} className="break-words text-xl font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700">{title}</h2>
           {description && <p id={`${id}-description`} className="mt-2 text-sm text-zinc-700">{description}</p>}
         </div>

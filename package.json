@@ -16,7 +16,9 @@
     "docs/compatibility.md",
     "docs/installation.md",
     "docs/discoverability.md",
-    "docs/assets/"
+    "docs/demo.md",
+    "docs/assets/ui-motion.svg",
+    "docs/assets/demo-preview.jpg"
   ],
   "scripts": {
     "start": "node ./bin/cli.mjs",
@@ -26,7 +28,9 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/installer.test.mjs && tsx --test tests/recipes.test.tsx",
     "test:package": "node scripts/package-smoke.mjs",
-    "github:metadata": "node scripts/github-metadata.mjs"
+    "github:metadata": "node scripts/github-metadata.mjs",
+    "demo:build": "node demo/build.mjs",
+    "demo": "npm run demo:build && node demo/server.mjs"
   },
   "repository": {
     "type": "git",
@@ -71,16 +75,19 @@
   "devDependencies": {
     "@babel/parser": "^8.0.7",
     "@eslint/js": "^10.0.1",
+    "@tailwindcss/cli": "4.3.0",
     "@testing-library/react": "^16.3.3",
     "@types/jsdom": "^30.0.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
     "jsdom": "^26.1.0",
     "motion": "^14.2.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "tailwindcss": "4.3.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
   }

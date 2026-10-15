@@ -18,7 +18,7 @@ export function trackScrollProgress(
       cancel = null;
       return;
     }
-    animation = animate(element, { transform: [`${axis}(0)`, `${axis}(1)`] }, { duration: 1, ease: 'linear', autoplay: false });
+    animation = animate(element, { transform: [`${axis}(0)`, `${axis}(1)`] }, { duration: 1, ease: 'linear' });
     cancel = scroll(animation, options.target ? { target: options.target, offset: ['start start', 'end end'] } : {});
   };
   const schedule = () => {

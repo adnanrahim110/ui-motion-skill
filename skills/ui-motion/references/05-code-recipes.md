@@ -43,6 +43,10 @@ Use the pinned architecture from reference 04 only when the real story needs it.
   on the server. No demo OTP secret, synthetic timeout, or client success flag proves
   an operation succeeded. The verification callback receives AbortSignal; the server operation
   may still complete after cancellation, so use server idempotency where necessary.
+- `VerificationCode` can report its current success state through `onVerifiedChange`.
+  Use it when a surrounding flow enables a next action after verification. Clearing
+  or editing the code resets that state. This is UI coordination; the server still
+  authorizes protected operations independently.
 - `ProgressiveDialog` accepts `title`, `description`, `stepKey`, and your `children`.
   The parent owns step state, input values, request cancellation, and success/error
   rendering. Update `stepKey` for deliberate focus handoff; changing content alone

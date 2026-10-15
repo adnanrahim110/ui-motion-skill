@@ -106,6 +106,17 @@ test('OTP success comes from the server callback and disables resubmission', asy
   assert.equal(calls, 1);
 });
 
+test('OTP clears the parent verified state when the user retries', async () => {
+  const states: boolean[] = [];
+  const ui = render(<VerificationCode verify={async () => ({ ok: true })} onVerifiedChange={(value) => states.push(value)} />);
+  fireEvent.change(ui.getByLabelText('Verification code'), { target: { value: '246810' } });
+  await act(async () => { fireEvent.click(ui.getByRole('button', { name: 'Verify code' })); });
+  assert.equal(states.at(-1), true);
+  fireEvent.click(ui.getByRole('button', { name: 'Clear and retry' }));
+  assert.equal(states.at(-1), false);
+  assert.equal(ui.getByDisplayValue(''), ui.getByLabelText('Verification code'));
+});
+
 test('dialog places focus, preserves Back values, and restores a connected trigger', () => {
   const trigger = document.createElement('button');
   document.body.append(trigger);

@@ -3,3 +3,5 @@ node_modules/
 *.log
 *.tgz
 ui-motion-skill.zip
+demo/dist/
+.artifacts/

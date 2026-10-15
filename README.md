@@ -10,6 +10,15 @@ for the details that are easy to miss: focus, cancellation, resizing, and reduce
 
 [Install](#install) · [Try it](#try-it-on-your-ui) · [React examples](#react-animation-examples) · [Read the skill](skills/ui-motion/SKILL.md)
 
+## See it work
+
+[![Release review dialog in the working UI Motion demo](docs/assets/demo-preview.jpg)](https://github.com/adnanrahim110/ui-motion-skill/blob/main/docs/assets/ui-motion-demo.mp4)
+
+[Watch the demo](https://github.com/adnanrahim110/ui-motion-skill/blob/main/docs/assets/ui-motion-demo.mp4).
+Real browser footage covers instant filters, a three-step dialog, server verification,
+cancellation, reduced motion, and a narrow mobile screen. Run the same
+[demo locally](docs/demo.md).
+
 ## Install
 
 ```sh

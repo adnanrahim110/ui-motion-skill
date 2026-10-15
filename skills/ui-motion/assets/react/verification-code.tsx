@@ -7,9 +7,10 @@ type Status = 'idle' | 'verifying' | 'success' | 'error';
 
 export type VerificationCodeProps = {
   verify: (code: string, signal: AbortSignal) => Promise<VerificationResult>;
+  onVerifiedChange?: (verified: boolean) => void;
 };
 
-export function VerificationCode({ verify }: VerificationCodeProps) {
+export function VerificationCode({ verify, onVerifiedChange }: VerificationCodeProps) {
   const id = useId();
   const input = useRef<HTMLInputElement>(null);
   const request = useRef<AbortController | null>(null);
@@ -19,6 +20,7 @@ export function VerificationCode({ verify }: VerificationCodeProps) {
   const pending = status === 'verifying';
 
   useEffect(() => () => { request.current?.abort(); request.current = null; }, []);
+  useEffect(() => { onVerifiedChange?.(status === 'success'); }, [status, onVerifiedChange]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,7 +61,7 @@ export function VerificationCode({ verify }: VerificationCodeProps) {
   }
 
   return (
-    <form onSubmit={submit} noValidate aria-busy={pending} className="grid w-full max-w-sm gap-4">
+    <form onSubmit={submit} noValidate aria-busy={pending} className="grid w-full min-w-0 max-w-sm grid-cols-1 gap-4">
       <label htmlFor={id} className="text-sm font-medium text-zinc-950">Verification code</label>
       <input
         ref={input}
@@ -80,14 +82,14 @@ export function VerificationCode({ verify }: VerificationCodeProps) {
           setStatus('idle');
           setMessage('Enter the six-digit code.');
         }}
-        className="min-h-12 w-full rounded-lg border border-zinc-500 bg-white px-4 py-3 text-lg tracking-widest text-zinc-950 aria-invalid:border-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700"
+        className="min-h-12 w-full min-w-0 rounded-lg border border-zinc-500 bg-white px-4 py-3 text-lg tracking-widest text-zinc-950 aria-invalid:border-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700"
       />
       <p id={`${id}-status`} role="status" aria-live="polite" aria-atomic="true" className="min-h-12 text-sm text-zinc-800">{message}</p>
       <div className="flex flex-wrap gap-4">
-        <button type="submit" disabled={pending || status === 'success'} className="min-h-12 min-w-12 rounded-lg bg-blue-800 px-4 py-3 font-medium text-white hover:bg-blue-900 active:bg-blue-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-zinc-600">
+        <button type="submit" disabled={pending || status === 'success'} className="min-h-12 min-w-12 max-w-full break-words rounded-lg bg-blue-800 px-4 py-3 font-medium text-white hover:bg-blue-900 active:bg-blue-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-zinc-600">
           {pending ? 'Verifying…' : status === 'success' ? 'Verified' : 'Verify code'}
         </button>
-        <button type="button" onClick={retry} className="min-h-12 min-w-12 rounded-lg border border-zinc-500 px-4 py-3 font-medium text-zinc-950 hover:bg-zinc-100 active:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700">
+        <button type="button" onClick={retry} className="min-h-12 min-w-12 max-w-full break-words rounded-lg border border-zinc-500 px-4 py-3 font-medium text-zinc-950 hover:bg-zinc-100 active:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700">
           {pending ? 'Cancel verification' : 'Clear and retry'}
         </button>
       </div>
